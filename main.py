@@ -1,16 +1,17 @@
-# This is a sample Python script.
+from langchain.llms import Bedrock
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+def bedrock_chatbot(input_text):
+    bedrock_lim = Bedrock(
+        credentials_profile_name='default',
+        model_id='anthropic.claude-v2:1',
+        model_kwargs= {
+            'prompt': '\n\nHuman:<prompt>\n\nAssistant:',
+            'temperature': 0.5,
+            'top_p': 1,
+            'top_k': 250,
+            'max_tokens_to_sample': 512
+        })
+    return bedrock_lim.predict(input_text)
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+res = bedrock_chatbot('프리미어리그 역대 득점 순위 알려줘')
+print(res)
